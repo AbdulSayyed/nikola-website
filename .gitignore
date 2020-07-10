@@ -1,0 +1,11 @@
+cache
+.doit.db*
+__pycache__
+output
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+.DS_Store
+
+# files
+*.pyc 
+*.py.backup
