@@ -26,6 +26,8 @@
     10. > nikola help new_post
     11. > nikola new_post -F # To list all available format
     12. > nikola new_post -f markdown -t about # new page with about.md created with tile set to about
+    13. > nikola theme -l # To get the list of install theme
+    14. > nikola theme --list-installed  # to see the list of installed theme
 ```
 
 ### Related Blogs
@@ -141,4 +143,61 @@ d-----        11/07/2020     01:33                listings
 
 > Note: Commit time.
 
+```git
+sayyed@neuro ~/n/p/n/mysite (dev)> gitcommit -m "@dev:Structure is working."                              (nikola) 
+[dev 8c4958e] dev:Structure is working.
+ 7 files changed, 335 insertions(+), 32 deletions(-)
+ create mode 100644 pages/about.rst
+ create mode 100644 pages/index.rst
+ create mode 100644 posts/001_intro.ipynb
+ create mode 100644 posts/002_basics.ipynb
+sayyed@neuro ~/n/p/n/mysite (dev)>    
+```
+
 ### Changing the theme
+
+1. First look at the available theme using ``nikola theme -l`. To see the available commands use `nikola help theme`. Here is the list of installed theme by default. Use ``nikola theme --list-installed` `
+
+```txt
+base at /home/sayyed/anaconda3/envs/nikola/lib/python3.8/site-packages/nikola/data/themes/base
+base-jinja at /home/sayyed/anaconda3/envs/nikola/lib/python3.8/site-packages/nikola/data/themes/base-jinja
+bootblog4 at /home/sayyed/anaconda3/envs/nikola/lib/python3.8/site-packages/nikola/data/themes/bootblog4
+bootblog4-jinja at /home/sayyed/anaconda3/envs/nikola/lib/python3.8/site-packages/nikola/data/themes/bootblog4-jinja
+bootstrap4 at /home/sayyed/anaconda3/envs/nikola/lib/python3.8/site-packages/nikola/data/themes/bootstrap4
+bootstrap4-jinja at /home/sayyed/anaconda3/envs/nikola/lib/python3.8/site-packages/nikola/data/themes/bootstrap4-jinja
+```
+2. We are going to use `bootsrap4`, take a list what is present there in that directory.
+
+```txt
+drwxrwxr-x 4 sayyed sayyed 4096 Jul 10 01:37 ./
+drwxrwxr-x 8 sayyed sayyed 4096 Jul 10 01:37 ../
+drwxrwxr-x 4 sayyed sayyed 4096 Jul 10 01:37 assets/
+-rw-rw-r-- 1 sayyed sayyed  249 Jul 10 01:37 bootstrap4.theme
+-rw-rw-r-- 1 sayyed sayyed  492 Jul 10 01:37 bundles
+-rw-rw-r-- 1 sayyed sayyed  399 Jul 10 01:37 README.md
+drwxrwxr-x 2 sayyed sayyed 4096 Jul 10 01:37 templates/
+```
+3. The templates directory contains the following.
+
+```txt
+drwxrwxr-x 2 sayyed sayyed 4096 Jul 10 01:37 ./
+drwxrwxr-x 4 sayyed sayyed 4096 Jul 10 01:37 ../
+-rw-rw-r-- 1 sayyed sayyed  655 Jul 10 01:37 authors.tmpl
+-rw-rw-r-- 1 sayyed sayyed 6904 Jul 10 01:37 base_helper.tmpl
+-rw-rw-r-- 1 sayyed sayyed 3202 Jul 10 01:37 base.tmpl
+-rw-rw-r-- 1 sayyed sayyed  440 Jul 10 01:37 index_helper.tmpl
+-rw-rw-r-- 1 sayyed sayyed  658 Jul 10 01:37 listing.tmpl
+-rw-rw-r-- 1 sayyed sayyed 2318 Jul 10 01:37 pagination_helper.tmpl
+-rw-rw-r-- 1 sayyed sayyed 1998 Jul 10 01:37 post.tmpl
+-rw-rw-r-- 1 sayyed sayyed 1124 Jul 10 01:37 tags.tmpl
+-rw-rw-r-- 1 sayyed sayyed  662 Jul 10 01:37 ui_helper.tmpl
+```
+
+4. When nikola uses `nikola new_post` plug in command it uses `post.tmp` defined in `conf.py` file to create the post.
+
+> Note: Before we are going to use this theme, the modern way of using themes is to also customise theme further with `bootswatch` themes as child theme. [Here]() is a list of child themes that we can use with `bootstap4`.
+
+### Subtheming: Using `flatly` bootswatch theme with parent bootstrap4.
+
+1. Run this command from the root directory `nikola subtheme -n myflatly -s flatly -p bootstrap4`
+
