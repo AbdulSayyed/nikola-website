@@ -17,7 +17,7 @@ import time
 
 # Data about this site
 BLOG_AUTHOR = "Abdul Sayyed"  # (translatable)
-BLOG_TITLE = "mysite"  # (translatable)
+BLOG_TITLE = "Sayyed's blog"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
 SITE_URL = "https://AbdulSayyed.github.io/mysite/"
@@ -25,7 +25,7 @@ SITE_URL = "https://AbdulSayyed.github.io/mysite/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://AbdulSayyed.github.io/mysite/"
 BLOG_EMAIL = "neuro.sayyed@gmail.com"
-BLOG_DESCRIPTION = "A demo site"  # (translatable)
+BLOG_DESCRIPTION = "Neuroscience in Python"  # (translatable)
 
 # Nikola is multilingual!
 #
@@ -153,7 +153,7 @@ NAVIGATION_ALT_LINKS = {
 }
 
 # Name of the theme to use.
-THEME = "bootblog4"
+# THEME = "bootblog4" # THIS IS THE DEFAULT ENTRY
 
 # Primary color of your theme. This will be used to customize your theme.
 # Must be a HEX value.
@@ -216,18 +216,18 @@ THEME_CONFIG = {
 #         ("pages/*.md", {"en": "pages", "de": "seiten"}, "page.tmpl"),
 #     )
 
-POSTS = (
-    ("posts/*.rst", "posts", "post.tmpl"),
-    ("posts/*.md", "posts", "post.tmpl"),
-    ("posts/*.txt", "posts", "post.tmpl"),
-    ("posts/*.html", "posts", "post.tmpl"),
-)
-PAGES = (
-    ("pages/*.rst", "pages", "page.tmpl"),
-    ("pages/*.md", "pages", "page.tmpl"),
-    ("pages/*.txt", "pages", "page.tmpl"),
-    ("pages/*.html", "pages", "page.tmpl"),
-)
+# POSTS = (
+#     ("posts/*.rst", "posts", "post.tmpl"),
+#     ("posts/*.md", "posts", "post.tmpl"),
+#     ("posts/*.txt", "posts", "post.tmpl"),
+#     ("posts/*.html", "posts", "post.tmpl"),
+# )
+# PAGES = (
+#     ("pages/*.rst", "pages", "page.tmpl"),
+#     ("pages/*.md", "pages", "page.tmpl"),
+#     ("pages/*.txt", "pages", "page.tmpl"),
+#     ("pages/*.html", "pages", "page.tmpl"),
+# )
 
 
 # Below this point, everything is optional
@@ -652,15 +652,15 @@ REDIRECTIONS = []
 # For more details, read the manual:
 # https://getnikola.com/handbook.html#deploying-to-github
 # You will need to configure the deployment branch on GitHub.
-GITHUB_SOURCE_BRANCH = 'src'
-GITHUB_DEPLOY_BRANCH = 'master'
+#GITHUB_SOURCE_BRANCH = 'src'
+#GITHUB_DEPLOY_BRANCH = 'master'
 
 # The name of the remote where you wish to push to, using github_deploy.
-GITHUB_REMOTE_NAME = 'origin'
+#GITHUB_REMOTE_NAME = 'origin'
 
 # Whether or not github_deploy should commit to the source branch automatically
 # before deploying.
-GITHUB_COMMIT_SOURCE = True
+#GITHUB_COMMIT_SOURCE = True
 
 # Where the output site should be located
 # If you don't use an absolute path, it will be considered as relative
@@ -1376,11 +1376,51 @@ GLOBAL_CONTEXT_FILLER = []
 TYPES_TO_HIDE_TITLE = []
 
 #########>>>>>>>>>>>>>>>>>>>>>>>> My Entries starts here !>>>>>>>>>>>>>>>>>>>>>>>>>#########
-
-
+# github_deploy configuration
+# For more details, read the manual:
+# https://getnikola.com/handbook.html#deploying-to-github
+# You will need to configure the deployment branch on GitHub.
 GITHUB_SOURCE_BRANCH = 'src'
 GITHUB_DEPLOY_BRANCH = 'master'
+
+# The name of the remote where you wish to push to, using github_deploy.
 GITHUB_REMOTE_NAME = 'origin'
+
+# Whether or not github_deploy should commit to the source branch automatically
+# before deploying.
+#GITHUB_COMMIT_SOURCE = True  # IF NOT WORKING WITH DEPLOYMENT LEAVE IT TO TRUE
 
 # So that the nikola github_deploy command `nikola github_deploy` won't touch your src branch.
 GITHUB_COMMIT_SOURCE = False
+
+########>>>>>>>>>>>>>>>>>>>>>>>>.The above is working<<<<<<<<<<<<<<<<<<<
+# Changing the theme.
+THEME = "bootstrap4"
+# You can add BOOTSWATCH but see the documentatin first, julst like in pelican BOTSWATCH='fatly`
+
+
+# Adding functionality for pages to be added
+POSTS = (
+    ("posts/*.rst", "blog", "post.tmpl"),
+    ("posts/*.md", "blog", "post.tmpl"),
+    ("posts/*.txt", "blog", "post.tmpl"),
+    ("posts/*.html", "blog", "post.tmpl"),
+    ("posts/*.ipynb", "blog", "post.tmpl"), # ADDING FUNCTIONALITY FOR IPYTHON
+)
+PAGES = (
+    ("pages/*.rst", "", "page.tmpl"),  # notice the second argument
+    ("pages/*.md", "", "page.tmpl"),
+    ("pages/*.txt", "", "page.tmpl"),
+    ("pages/*.html", "", "page.tmpl"),
+    ("pages/*.ipynb", "", "page.tmpl"),
+)
+
+INDEX_PATH = "blog"
+
+# Adding navigation links
+NAVIGATION_LINKS = {
+    DEFAULT_LANG: (
+        #("/index.html", "Home"),
+        # ("/about/index.html", "About me"),
+) 
+}
