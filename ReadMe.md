@@ -41,7 +41,9 @@
   + [Bootswatch](https://bootswatch.com/)
   + [by Mathieu Dugu](https://www.brainsorting.dev/posts/create-a-blog-with-nikola/)
   + [Brian](http://groupbcl.ca/blog/posts/2019/static-site-generator-candidate-software-nikola/)
+  + [Brain Sorting](https://www.brainsorting.dev/posts/create-a-blog-with-nikola/)
   + [Randlow](https://randlow.github.io/posts/python/create-nikola-coding-blog/
+  + [By Josh](https://www.joshbialkowski.com/pages/extending.html)
 
 
 
@@ -199,5 +201,157 @@ drwxrwxr-x 4 sayyed sayyed 4096 Jul 10 01:37 ../
 
 ### Subtheming: Using `flatly` bootswatch theme with parent bootstrap4.
 
-1. Run this command from the root directory `nikola subtheme -n myflatly -s flatly -p bootstrap4`
+- Nikola allows you to use bootstrap watch sub themeing. First you can choose a theme directly of your choice freely from bootswatch.
+- Once you have decided the theme, you need to use this command in your root directoy.
+- This will crate a folder which would be the name of you custom theme and download the bottswath them. You only need to tell in config file about your custom theme name `theme = 'name of the folder" ` here in this command it is `myflatly`. 
+- Run this command from the root directory `nikola subtheme -n myflatly -s flatly -p bootstrap4`
 
+> Note -n indicates the name you decide to give to your custom theme ( it is called a custom theme as you are using a misture of both themes). -s indicates the subthemeing and -p indicats the parent theme.
+
+
+```txt
+sayyed@neuro ~/n/p/n/mysite (dev) [1]> nikola subtheme -n myflatly -s flatly -p bootstrap4                                          (nikola) 
+[2020-07-15 16:08:18] INFO: subtheme: Creating 'myflatly' theme from 'flatly' and 'bootstrap4'
+[2020-07-15 16:08:18] INFO: subtheme: Downloading: https://bootswatch.com/4/flatly/bootstrap.min.css
+[2020-07-15 16:08:18] INFO: subtheme: Downloading: https://bootswatch.com/4/flatly/bootstrap.css
+[2020-07-15 16:08:18] INFO: subtheme: Theme created.  Change the THEME setting to "myflatly" to use it.
+```
+
+- Nikola creates a new directory `Themes\assests\ css and js files` along with a file called `myflatly.theme`.
+- Set the value of `THEME = myflatly` and not to the `bootstrap4`.
+- Run the server, if no change is detected. Do the follwoings: make sure in config file no double entires of `THEME = ` are actively present, second rund `nikola clean` and build the site again using either `nikoa auto ` or nikoa server`. If no change is detected, delete the cash files and re run again. If no luck delete the themes directory and re run the subthemeing commands and watch for any error closely.
+
+> Note: Commit our changes.
+
+```txt
+[dev 369c59b] dev:New theme is used successfully, bootswatch theme `flatly` installed,it is working.
+ 5 files changed, 11111 insertions(+), 25 deletions(-)
+ create mode 100644 themes/myflatly/assets/css/bootstrap.css
+ create mode 100644 themes/myflatly/assets/css/bootstrap.min.css
+ create mode 100644 themes/myflatly/myflatly.theme
+ ```
+
+### Adding submenue in Kikola
+
+- Sub menus are added in nested tuple. So if I need to have a menu with sub menu. First thing to note that I would need the third tuple where the entries will go. Say I have a menue with title `My Blog` and uder this menu, I have two entries say `ABC` and `DEF`. Then
+
+```txt
+(
+  (( ("/blog/","ABC"),("/pages/about/","DEF") ), "My Blogs"),
+)
+```
+
+- The last entry in a tuple `MY Blogs` is the main menu title, while the other two entries `ABC` and `DEF` are the submenu's title. When these submenues are pressed they take to the files they are pointing to.
+- Similarly if I want more menus I have to add them accordingly. 
+
+### Creating navigation links in menu bar
+
+- The menu bar does not have any links that we want. I have the following menus to my page. Add the follwoing the to the config file.Comment the old values.
+
+```txt
+NAVIGATION_LINKS = {
+    DEFAULT_LANG: (
+        (
+            (   
+               ("/categories/python/", "Python"),
+               ("/categories/neuroscience/", "Neuroscience"),
+               ("/categories/nipype/", "Neuroimaging in Python"),
+            ),
+            "My Blogs"
+        ),
+        (
+            (
+                ("/about/", "About"),
+                ("/pages/publication/", "Publications"),
+
+            ),
+            "About"
+        ),
+        
+        ("/archive/", "Archives"),
+        ("/rss.xml", "RSS feed"),
+        ("/categories/index.html", "Tags"),
+    ),
+}
+```
+- The setting is such that I have three different types of posts, with different category. Nikola can have only one category at one time.
+- I have set `python,neuroscience, and nipype` to start with. And I would want my files to be arranged according to thier categores. Thus I have set three different paths. These paths tell nikola that when I press the submenu name `Neuroimaging in Python` of the main menu name `My Blogs` the file that well be srved comes from `/catagories/cat_nipype/` folder.
+
+
+### Arragning default psts
+
+- Since I werite two kinds of files one uses markdown and the other uses notebooks and I would lke to keep the `notebooks` seprate. I have amended the follwoing section of config file according to my needs.
+
+```txt
+# type,source,template
+POSTS = (
+    ("notebooks/*.ipynb", "notebooks", "post.tmpl"), # This line is added by me
+    ("posts/*.rst","psots","post.tmp"), # It is necessary for short codes.
+    ("posts/*.md", "posts", "post.tmpl"),
+    ("posts/*.txt", "posts", "post.tmpl"),
+    ("posts/*.html", "posts", "post.tmpl"),
+)
+PAGES = (
+    ("pages/*.rst", "pages", "page.tmpl"), # Do not delete it.
+    ("pages/*.md", "pages", "page.tmpl"),
+    ("pages/*.txt", "pages", "page.tmpl"),
+    ("pages/*.html", "", "page.tmpl"), # It is omitted so that landing html does not end up in pages floder.
+    #("notebooks/*.ipynb", "", "page.tmpl") # This line is added by me
+)
+
+```
+
+- The very first line in posts `("notebook/*.ipnb","notebooks","post.tmpl")` says that when a new notebook is cerated it is created in the root floder called `notbook` that we will create in next steps, the seconed entry tells that when website is served the notebooks post will be served from `nootbooks` directroy and the template used is `post.tmpl`.
+
+- Once the above settings are done, creating a simple notebook in a right folder is done using `nikola new_post -f ipynb -t 003_basics`. The new notebook will be created in the `notebook` folder and will be seved from `output/notebook/` folder.
+
+- Nikola automatically adds in necessary meta data that is needed for jupyter notebook to be published as a post, the following sectin is added in notebook file.
+
+```txt
+"nikola": {
+      "category": "nipype",
+      "date": "2020-07-10 15:43:54 UTC+01:00",
+      "description": "",
+      "link": "",
+      "slug": "001_intro",
+      "tags": "python, jupyter, nipype",
+      "title": "001_intro",
+      "type": "text"
+    }
+```
+
+- The vale of category is left empty that is needed to be filled. This file can be opened in any json editor and ameneded.
+- No authoer field is added it can be done by adding the fololowing code in the config file.
+
+```txt
+ADDITIONAL_METADATA = {
+    'author': 'Abdul Sayyed',
+    'summary': ''
+}
+
+```
+- Once this is added in config file, a new created post will have the additional entreis as shown below
+
+```txt
+"nikola": {
+   "author": "Abdul Sayyed",
+   "category": "",
+   "date": "2020-07-15 19:24:30 UTC+01:00",
+   "description": "",
+   "link": "",
+   "slug": "test2",
+   "summary": "",
+   "tags": "",
+   "title": "test2",
+   "type": "text"
+  }
+```
+
+
+
+
+
+ ### Nikola **landing page**
+
+ - When nikola starts it reads `conf.py`, one of the values set there is of `INDEX_PATH = ""`. By default it is set to have no value, then when server starts it serve the site from the root directory of the websit that is `output/`.
+ - Run nikola in auto mode which is to to livereload method, and change the vaoue of this variable to post `INDEX_PATH = post` and watch the landing page is changed accrodingly.

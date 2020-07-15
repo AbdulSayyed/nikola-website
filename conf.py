@@ -446,10 +446,10 @@ HIDDEN_TAGS = ['mathjax']
 # using a forward slash ('/') to separate paths. Use a backslash ('\') to escape
 # a forward slash or a backslash (i.e. '\//\\' is a path specifying the
 # subcategory called '\' of the top-level category called '/').
-CATEGORY_ALLOW_HIERARCHIES = False
+#CATEGORY_ALLOW_HIERARCHIES = False
 # If CATEGORY_OUTPUT_FLAT_HIERARCHY is set to True, the output written to output
 # contains only the name of the leaf category and not the whole path.
-CATEGORY_OUTPUT_FLAT_HIERARCHY = False
+#CATEGORY_OUTPUT_FLAT_HIERARCHY = False
 
 # If CATEGORY_PAGES_ARE_INDEXES is set to True, each category's page will contain
 # the posts themselves. If set to False, it will be just a list of links.
@@ -1100,7 +1100,13 @@ PRETTY_URLS = True
 #       with the MarkdownExtension class and should not be added here.
 # Defaults are markdown.extensions.(fenced_code|codehilite|extra)
 # markdown.extensions.meta is required for Markdown metadata.
-MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', 'markdown.extensions.codehilite', 'markdown.extensions.extra']
+
+MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.fenced_code',
+    'markdown.extensions.codehilite', 
+    'markdown.extensions.extra',
+    'markdown.extensions.meta',
+    ]
 
 # Options to be passed to markdown extensions (See https://python-markdown.github.io/reference/)
 # Default is {} (no config at all)
@@ -1403,26 +1409,151 @@ THEME = "myflatly"
 
 # Adding functionality for pages to be added
 POSTS = (
-    ("posts/*.rst", "blog", "post.tmpl"),
-    ("posts/*.md", "blog", "post.tmpl"),
-    ("posts/*.txt", "blog", "post.tmpl"),
-    ("posts/*.html", "blog", "post.tmpl"),
-    ("posts/*.ipynb", "blog", "post.tmpl"), # ADDING FUNCTIONALITY FOR IPYTHON
+    ("notebooks/*.ipynb", "notebooks", "post.tmpl"), # This line is added by me
+    ("posts/*.rst","psots","post.tmp"), # It is necessary for short codes.
+    ("posts/*.md", "posts", "post.tmpl"),
+    ("posts/*.txt", "posts", "post.tmpl"),
+    ("posts/*.html", "posts", "post.tmpl"),
 )
 PAGES = (
-    ("pages/*.rst", "pages", "page.tmpl"),  # notice the second argument
+    ("pages/*.rst", "pages", "page.tmpl"), # Do not delete it.
     ("pages/*.md", "pages", "page.tmpl"),
     ("pages/*.txt", "pages", "page.tmpl"),
-    ("pages/*.html", "pages", "page.tmpl"),
-    #("pages/*.ipynb", "", "page.tmpl"),
+    ("pages/*.html", "", "page.tmpl"), # It is omitted so that landing html does not end up in pages floder.
+    #("notebooks/*.ipynb", "", "page.tmpl") # This line is added by me
 )
 
-INDEX_PATH = "posts"
+
+## To add these field into meta data.
+ADDITIONAL_METADATA = {
+    'author': 'Abdul Sayyed',
+    'summary': ''
+}
+
+
+INDEX_PATH = ""
 
 # Adding navigation links
+# NAVIGATION_LINKS = {
+#     DEFAULT_LANG: (
+#         ("/index.html", "Home"),
+#         ("/about/index.html", "About me"),
+# ), 
+# }
+
+ARCHIVE_PATH = 'archive'
+ARCHIVE_FILENAME = 'index.html'
+
+######################################################
+
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        #("/index.html", "Home"),
-        # ("/about/index.html", "About me"),
-) 
+        (
+            (   
+               ("/categories/cat_python/", "Python"),
+               ("/categories/cat_neuroscience/", "Neuroscience"),
+               ("/categories/cat_nipype/", "Neuroimaging in Python"),
+               ("/categories/cat_nikola/", "Nikola"),
+            ),
+            "My Blogs"
+        ),
+        (
+            (
+                ("/pages/about/", "About"),
+                ("/pages/publication/", "Publications"),
+
+            ),
+            "About"
+        ),
+        
+        ("/archive/", "Archives"),
+        ("/rss.xml", "RSS feed"),
+        ("/categories/index.html", "Tags"),
+    ),
 }
+
+####################################################################
+CATEGORY_PATH = "categories"
+CATEGORY_PREFIX = "cat_"
+CATEGORY_ALLOW_HIERARCHIES = False
+CATEGORY_OUTPUT_FLAT_HIERARCHY = False
+CATEGORIES_INDEX_PATH = "categories.html"
+
+################################################
+CATEGORY_PAGES_ARE_INDEXES = False
+TAG_PAGES_ARE_INDEXES = False
+ARCHIVES_ARE_INDEXES = False
+AUTHOR_PAGES_ARE_INDEXES = False
+
+#################################################
+CATEGORY_TITLES = {
+   DEFAULT_LANG: {
+       "python" : "Python",
+       "neuroscience" : "Neuroscience",
+       "nipype": "Neuroimaging in Python",
+       "nikola": "Nikola Static Site Generator",
+   },
+}
+
+
+CONTENT_FOOTER_FORMATS = {
+    DEFAULT_LANG: (
+        (),
+        {
+            "email": BLOG_EMAIL,
+            "author": BLOG_AUTHOR,
+            "date": time.gmtime().tm_year,
+            "license": LICENSE
+        }
+    )
+}
+##########################################################################
+
+CATEGORY_DESCRIPTIONS = {
+   DEFAULT_LANG: {
+       "nipype": '''
+        <p><h5>A python package for neuro imaging analysis<h5></p>
+        <p>Learning analysis in python language using `nipype` </p>
+        ''' + '''
+        <center>
+        <hr>
+        ''',
+        "Neuroscience": '''
+        <p><h5>These post mostly deal with neuro cognitive psychology, a part of neuroscience that deals with finding the neural correltas fo cognition.<h5></p>
+        <p>Learning analysis in python language using `nipype` </p>
+        ''' + '''
+        <center>
+        <hr>
+      ''',
+       "python": '''
+        <p><h5>The  canonical, "Python is a great first language", elicited, "Python is a great last language!"<h5><p>
+        <p>I believe Python has really democratized programming is the best general purpose language out there! I cover interesting functionality or avant-garde new packages in Python.</p>
+        ''' + '''
+        <center>
+        <hr>
+        ''',
+   },
+}
+
+####################
+CONTENT_FOOTER = '''
+<center>
+<br>
+Contents &copy; {date} <a href="mailto:{email}">{author}</a> {license}'
+</center>
+<br>
+'''
+
+
+#####################
+SEARCH_FORM = """
+ <form method="get" action="https://www.google.com/search" class="form-inline my-2 my-lg-0" role="search">
+ <div class="form-group">
+ <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search">
+ </div>
+ <button type="submit" class="btn btn-secondary my-2 my-sm-0">
+    <i class="fas fa-search"></i></button>
+ </button>
+ <input type="hidden" name="sitesearch" value="%s">
+ </form>
+""" % SITE_URL
