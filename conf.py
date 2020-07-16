@@ -137,13 +137,13 @@ TRANSLATIONS_PATTERN = '{path}.{lang}.{ext}'
 #          with a ``/``, otherwise end them with ``/index.html`` — or
 #          else they won’t be highlighted when active.
 
-NAVIGATION_LINKS = {
-    DEFAULT_LANG: (
-        ("/archive.html", "Archive"),
-        ("/categories/", "Tags"),
-        ("/rss.xml", "RSS feed"),
-    ),
-}
+# NAVIGATION_LINKS = {
+#     DEFAULT_LANG: (
+#         ("/archive.html", "Archive"),
+#         ("/categories/", "Tags"),
+#         ("/rss.xml", "RSS feed"),
+#     ),
+# }
 
 # Alternative navigation links. Works the same way NAVIGATION_LINKS does,
 # although themes may not always support them. (translatable)
@@ -1431,7 +1431,7 @@ ADDITIONAL_METADATA = {
 }
 
 
-# INDEX_PATH = ""
+#INDEX_PATH = ""
 INDEX_PATH = 'posts'
 
 # Adding navigation links
@@ -1450,7 +1450,7 @@ ARCHIVE_FILENAME = 'index.html'
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
         (
-            (   
+               (   
                ("/categories/cat_python/", "Python"),
                ("/categories/cat_neuroscience/", "Neuroscience"),
                ("/categories/cat_nipype/", "Neuroimaging in Python"),
@@ -1460,7 +1460,7 @@ NAVIGATION_LINKS = {
         ),
         (
             (
-                ("/pages/about/", "About"),
+                ("/pages/aboutme/", "About"),
                 ("/pages/publication/", "Publications"),
 
             ),
@@ -1487,12 +1487,21 @@ ARCHIVES_ARE_INDEXES = False
 AUTHOR_PAGES_ARE_INDEXES = False
 
 #################################################
+# Set descriptions for category pages to make them more interesting. The
+# default is no description. The value is used in the meta description
+# and displayed underneath the category list or index page’s title.
+# CATEGORY_DESCRIPTIONS = {
+#    DEFAULT_LANG: {
+#        "blogging": "Meta-blog posts about blogging.",
+#        "open source": "My contributions to my many, varied, ever-changing, and eternal libre software projects."
+#    },
+# }
 CATEGORY_TITLES = {
    DEFAULT_LANG: {
+       "nipype": "A python way Neuroimaging Analysis",
        "python" : "Python",
-       "neuroscience" : "Neuroscience",
-       "nipype": "Neuroimaging in Python",
-       "nikola": "Nikola Static Site Generator",
+       "neuroscience" : " A multi discipilionary faculty of brain sceinces",
+       "nikola": "Nikola Static Site Generator", 
    },
 }
 
@@ -1510,31 +1519,54 @@ CONTENT_FOOTER_FORMATS = {
 }
 ##########################################################################
 
+
+# Set special titles for category pages. The default is "Posts about CATEGORY".
+# CATEGORY_TITLES = {
+#    DEFAULT_LANG: {
+#        "blogging": "Meta-posts about blogging",
+#        "open source": "Posts about open source software"
+#    },
+# }
+#######################################################################
 CATEGORY_DESCRIPTIONS = {
    DEFAULT_LANG: {
-       "nipype": '''
+       "python":
+       '''
+                <p><h5>An old computer general purpose language that has gain popularity over other language becasuse of its dynamic expansion from diverse community, it has become a defacto standard like javascript</h5></p>
+                <p> Write some more !
+                '''+'''
+                <center>
+                <hr>
+       ''',
+    # <!--seconed entry-->
+       "neuroscience":
+       '''
+                <p><h5>It is a field that deals with many aspects of brain functioning, in my post the veiw of is neuro congnitive science where the reashears wants to see the basics of cognition, they want to underpin the neural correlets about any congnitive phenomena like `memory` and `decissions`</h5></p>
+                <p> Write some more about neuroscience !
+                <center>
+                <hr>
+       ''',
+    # <!--third entry-->
+       "nipype": 
+       '''
         <p><h5>A python package for neuro imaging analysis<h5></p>
         <p>Learning analysis in python language using `nipype` </p>
-        ''' + '''
-        <center>
+         ''' + '''
+         <center>
         <hr>
         ''',
-        "Neuroscience": '''
-        <p><h5>These post mostly deal with neuro cognitive psychology, a part of neuroscience that deals with finding the neural correltas fo cognition.<h5></p>
-        <p>Learning analysis in python language using `nipype` </p>
-        ''' + '''
-        <center>
+        # <!--fourth entry-->
+       "nikola": 
+       '''
+        <p><h5>Written in python language inspired by Hugo and pelican. This site is built in Nikola",<h5></p>
+        <p>Write some more about nikola! </p>
+         ''' + '''
+         <center>
         <hr>
-      ''',
-       "python": '''
-        <p><h5>The  canonical, "Python is a great first language", elicited, "Python is a great last language!"<h5><p>
-        <p>I believe Python has really democratized programming is the best general purpose language out there! I cover interesting functionality or avant-garde new packages in Python.</p>
-        ''' + '''
-        <center>
-        <hr>
-        ''',
+        '''
    },
 }
+
 
 ####################
 CONTENT_FOOTER = '''

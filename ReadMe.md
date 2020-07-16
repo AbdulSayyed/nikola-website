@@ -51,6 +51,43 @@
 
 - It is a python static site generator that used help from other existing site generators such as hugo and pelican. It has number of small pulgins that do the jobs. [Here](https://plugins.getnikola.com/) is the list of plug in that it uses.
 - For example `notebook_shortcode` is a plug in that allows embedding the notebook into the markdown files. But be careful, it may not work and distrub your settings.
+- Nikola reads your config file and generate  a structured website according to the information provided in config ifle. Config file also depends upon the meta data you create in every file whether it is `md,rst,html,ipynb` file. Thus a page created about `aboutme` in pages folder will be renedered in `output/` directroy as `output/aboutme/index.html`. Hence when you provide a link to this file, you nedd to say in your tuple valuses that `(/pages/aboutme/,About)` Therefore do not change the default folders generated in nikola.
+- Nikola generates what is known as taxanomies when building sites. An example is given below. It is a long file which is shortened here.
+
+```txt
+Scanning posts.........done!
+.  scale_images:output/images/home-page/landing.png
+.  copy_assets:output/assets/css/bootstrap.min.css
+.  copy_assets:output/assets/js/jquery.min.js
+. # copy all assets files as it is to ouput/ directroy.
+.  render_posts:cache/pages/aboutme.html
+.  render_posts:cache/pages/index.html
+. # Then renders evry folder created in output/ into cash.
+.  render_sources:output/index.src.html
+.  render_sources:output/pages/publication/index.md
+.# And also renders it into outp/
+.  render_taxonomies:output/posts/index.html
+.  render_taxonomies:output/categories/index.html
+.  render_taxonomies:output/categories/nikola/index.html
+.  render_taxonomies:output/categories/static-site-generator/index.html
+.  render_taxonomies:output/categories/jupyter/index.html
+.  render_taxonomies:output/categories/nipype/index.html
+.  render_taxonomies:output/categories/python/index.html
+.  render_taxonomies:output/archive/2020/index.html
+.  render_taxonomies:output/archive/index.html
+.  render_taxonomies:output/archive/2019/index.html
+.  render_taxonomies:output/categories.html
+.  render_taxonomies:output/categories/cat_neuroscience/index.html
+.  render_taxonomies:output/categories/cat_nikola/index.html
+.  render_taxonomies:output/categories/cat_nipype/index.html
+.  render_taxonomies:output/categories/cat_python/index.html
+
+# With the above it is rendering a same file twice, I need to fix this.
+# One file is created in `output/categories/python/index.html
+# The same file is creatd in `output/categories/cat_python/index.html
+.  render_pages:output/index.html
+
+```
 
 
 ### Installing Nikola 
@@ -357,7 +394,27 @@ ADDITIONAL_METADATA = {
 
  ### Nikola **landing page**
 
- - When nikola starts it reads `conf.py`, one of the values set there is of `INDEX_PATH = ""`. By default it is set to have no value, then when server starts it serve the site from the root directory of the websit that is `output/`. This page is generated automatically depending upon the configuration set in config files.
+ - When nikola starts it reads `conf.py`, one of the values set there is of `INDEX_PATH = ""`. By default it is set to have no value, when server starts it serve the site from the root directory of the websit that is `output/`. This page is generated automatically depending upon the configuration set in config files.
  - Run nikola in auto mode which is to to livereload method, and change the value of this variable to post `INDEX_PATH = post` and watch the landing page is changed accrodingly.
 
+ > The above is still ambigious and requires more explanation.
+
  1. Create a page using `nikola new_page -f html -f index`
+
+ > Getting error
+
+```
+ [2020-07-16 09:45:59] INFO: auto: REBUILDING SITE (from pages/index.html)
+[2020-07-16 09:46:04] ERROR: auto: Scanning posts.........done!
+[2020-07-16 09:46:03] ERROR: Nikola: Error loading tasks. An unhandled exception occurred.
+[2020-07-16 09:46:04] ERROR: Nikola: doit.exceptions.InvalidTask: Task generation 'render_site' has duplicated definition of 'render_posts:cache/pages/index.html'
+[2020-07-16 09:46:04] WARNING: Nikola: To see more details, run Nikola in debug mode (set environment variable NIKOLA_DEBUG=1) or use NIKOLA_SHOW_TRACEBACKS=1
+
+```
+
+1. Set your `INDEX_PATH=POST` if you are using `posts` folder, if not set to whatever you have decided. For example some might replace `posts` folder with `blogs`.
+2. Make sure the entery in `POST = ()` tuple your html page generaton is set to the follwong, `PAGES = ("pages/*.html","","page.tmpl")`, if you want your landing page to be created in root directory. By default it is created in `pages` folder.
+3. Create a page using `nikola new_page -f html -f index`
+4. Open `index.html` from the `pages/` or from the `/` root and enter your home page html markup contents.
+
+
