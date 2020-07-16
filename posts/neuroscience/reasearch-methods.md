@@ -2,7 +2,7 @@
 .. title: Reasearch Methods
 .. slug: reasearch-methods
 .. date: 2020-07-15 20:41:55 UTC+01:00
-.. tags: 
+.. tags: neuro
 .. category: neuroscience
 .. link: 
 .. description: 
