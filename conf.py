@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import time
+TIMEZONE = "Europe/London"
 
 # !! This is the configuration of Nikola. !! #
 # !!  You should edit it to your liking.  !! #
@@ -20,7 +21,7 @@ BLOG_AUTHOR = "Abdul Sayyed"  # (translatable)
 BLOG_TITLE = "Sayyed's blog"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
-SITE_URL = "https://AbdulSayyed.github.io/mysite/"
+SITE_URL = "https://AbdulSayyed.github.io/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://AbdulSayyed.github.io/mysite/"
@@ -240,7 +241,7 @@ NAVIGATION_ALT_LINKS = {
 # (e.g. 'Europe/Zurich')
 # Also, if you want to use a different time zone in some of your posts,
 # you can use the ISO 8601/RFC 3339 format (ex. 2012-03-30T23:00:00+02:00)
-TIMEZONE = "Europe/London"
+#TIMEZONE = "Europe/London"
 
 # If you want to use ISO 8601 (also valid RFC 3339) throughout Nikola
 # (especially in new_post), set this to True.
@@ -1520,13 +1521,7 @@ CONTENT_FOOTER_FORMATS = {
 ##########################################################################
 
 
-# Set special titles for category pages. The default is "Posts about CATEGORY".
-# CATEGORY_TITLES = {
-#    DEFAULT_LANG: {
-#        "blogging": "Meta-posts about blogging",
-#        "open source": "Posts about open source software"
-#    },
-# }
+
 #######################################################################
 CATEGORY_DESCRIPTIONS = {
    DEFAULT_LANG: {
