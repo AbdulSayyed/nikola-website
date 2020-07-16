@@ -1431,7 +1431,8 @@ ADDITIONAL_METADATA = {
 }
 
 
-INDEX_PATH = ""
+# INDEX_PATH = ""
+INDEX_PATH = 'posts'
 
 # Adding navigation links
 # NAVIGATION_LINKS = {

@@ -347,11 +347,17 @@ ADDITIONAL_METADATA = {
   }
 ```
 
+### Catageories in Nikola
+
+- 
+
 
 
 
 
  ### Nikola **landing page**
 
- - When nikola starts it reads `conf.py`, one of the values set there is of `INDEX_PATH = ""`. By default it is set to have no value, then when server starts it serve the site from the root directory of the websit that is `output/`.
- - Run nikola in auto mode which is to to livereload method, and change the vaoue of this variable to post `INDEX_PATH = post` and watch the landing page is changed accrodingly.
+ - When nikola starts it reads `conf.py`, one of the values set there is of `INDEX_PATH = ""`. By default it is set to have no value, then when server starts it serve the site from the root directory of the websit that is `output/`. This page is generated automatically depending upon the configuration set in config files.
+ - Run nikola in auto mode which is to to livereload method, and change the value of this variable to post `INDEX_PATH = post` and watch the landing page is changed accrodingly.
+
+ 1. Create a page using `nikola new_page -f html -f index`
