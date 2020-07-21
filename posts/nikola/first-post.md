@@ -1,5 +1,5 @@
 <!--
-.. title: first-post
+.. title: Nikola Basics
 .. slug: first-post
 .. date: 2020-07-15 18:10:06 UTC+01:00
 .. tags: static site generator, nikola
@@ -10,11 +10,15 @@
 .. type: text
 -->
 
-## [Nikola](https://getnikola.com/getting-started.html) A modern static site generator with jupyter notebook help
+## [Nikola](https://getnikola.com/getting-started.html) :  A modern static site generator with builtin jupyter notebook functionality
+
+---
+
 
 ### Nikol commands used.
 
-```txt 
+
+```python
     1.  > nikola version
     2.  > nikola init --quiet sayyedblogs
     3.  > nikola init --demo sayyedblogs
@@ -144,7 +148,7 @@ d-----        11/07/2020     01:33                listings
 
 > Note: Commit time.
 
-```git
+```python
 sayyed@neuro ~/n/p/n/mysite (dev)> gitcommit -m "@dev:Structure is working."                              (nikola) 
 [dev 8c4958e] dev:Structure is working.
  7 files changed, 335 insertions(+), 32 deletions(-)

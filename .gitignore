@@ -2,6 +2,7 @@ cache/
 .doit.db*
 __pycache__/
 output/
+temp/
 
 .ipynb_checkpoints
 */.ipynb_checkpoints/*

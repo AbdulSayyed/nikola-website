@@ -268,6 +268,8 @@ sayyed@neuro ~/n/p/n/mysite (dev) [1]> nikola subtheme -n myflatly -s flatly -p 
  create mode 100644 themes/myflatly/myflatly.theme
  ```
 
+
+
 ### Adding submenue in Kikola
 
 - Sub menus are added in nested tuple. So if I need to have a menu with sub menu. First thing to note that I would need the third tuple where the entries will go. Say I have a menue with title `My Blog` and uder this menu, I have two entries say `ABC` and `DEF`. Then
@@ -332,8 +334,8 @@ PAGES = (
     ("pages/*.rst", "pages", "page.tmpl"), # Do not delete it.
     ("pages/*.md", "pages", "page.tmpl"),
     ("pages/*.txt", "pages", "page.tmpl"),
-    ("pages/*.html", "", "page.tmpl"), # It is omitted so that landing html does not end up in pages floder.
-    #("notebooks/*.ipynb", "", "page.tmpl") # This line is added by me
+    ("pages/*.html", "", "page.tmpl"), # It is omitted so that landing html does not end up in pages floder of the output directory, note the middle destination refers to ouput directory.
+    #("notebooks/*.ipynb", "", "page.tmpl") # This line is added by me, 
 )
 
 ```
@@ -416,5 +418,76 @@ ADDITIONAL_METADATA = {
 2. Make sure the entery in `POST = ()` tuple your html page generaton is set to the follwong, `PAGES = ("pages/*.html","","page.tmpl")`, if you want your landing page to be created in root directory. By default it is created in `pages` folder.
 3. Create a page using `nikola new_page -f html -f index`
 4. Open `index.html` from the `pages/` or from the `/` root and enter your home page html markup contents.
+
+
+### Different small changes
+
+1. Set value of `DATE_FORMAT =` from long one to `# DATE_FORMAT = 'yyyy-MM-dd`. By default a long date is produced.
+
+2. 
+
+
+### Adding `custom.css` 
+
+- To add specific functionality into css files. Nikola allows you inherit a template that suits your need. Since we want to make changes to our content file, the template that comes handy in a `base_helper.tmpl`.
+- Copy this template using this command do not copy paste using folder. `cp theme -c base_helper.tmpl`. This will automatically copy the template into the teme directroy by creating a `templates` folder first.
+- It is this template file that we can modify.
+- Create a `custom.css` file in `assets/css/` folder. Keep the name `cusotm` as it is already set to be used.
+- It is in this file that you write or override properties that you want.
+- There is one more thing you need to do, that is to tell your template to refer to this `custom.css` fole. But it is necessary when you create a new `.css` file and you to it  by adding a `<link href="../assets/css/<filename>.css" rel="stylesheet" type="text/css">` tag into config file using `extra_head` variable.
+- But if you use the name `custom.css` it does not have to be becasue it has been already done by nikola in templates.
+
+> Note to self: I added this custom.css file according to the instructions but when programme was run, it would not make any difference to my notebook file. Upon using `F12` developer mode I realised that `custom.css` entery was present but it was not detectable. The reason was that I am using my notebook not in post folder but parallel to post folder so I had to go two steps back in my pathe to get it discovered by changain the relative path into `base_helper.tmpl` file from `<link href="../assests/css/custom.css" ....>` to `<link href="../../assests/css/custom.css">`.
+
+- The template file is one way of telling nikola the changes you want so that theme can read the template file before rendering the page. but if only `custom.css` is to be used it can simply be told from `conf.py` file as shown below.
+
+```
+EXTRA_HEAD_DATA = """
+
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+"""
+```
+
+- Though the entery to custom.css has already been entered by the template that we copied to modify but we did modiy it and none of our blog is created from the template so it is useless unless specifically used by our post, taken from `base_heper.tmpl` onlyt the stylesheets entry.
+
+```txt
+<%def name="html_stylesheets()">
+    %if use_cdn:
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css" integrity="sha256-cLMYWYYutHkt+KpNqjg7NVkYSQ+E2VbrXsEvOqU7mL0=" crossorigin="anonymous">
+    % endif
+    %if use_bundles and use_cdn:
+        <link href="/assets/css/all.css" rel="stylesheet" type="text/css">
+    %elif use_bundles:
+        <link href="/assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+    %else:
+        %if not use_cdn:
+            <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+            <link href="/assets/css/baguetteBox.min.css" rel="stylesheet" type="text/css">
+        %endif
+        <link href="/assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="/assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="/assets/css/theme.css" rel="stylesheet" type="text/css">
+        %if has_custom_css:
+            <link href="../assets/css/custom.css" rel="stylesheet" type="text/css">
+        %endif
+    %endif
+  ```
+  
+- The line at the end of custom.css is already there. This file has to be at the end in order to override other files. And if any modification that is required by you  it is done in the custom tmeplate. You can see theat it `href=` property points to `../assets/css/custom.css` file because this is what it rquired to do.
+- In my site I made a decission to make my `notebook` folder on the root level and not under `post` folder thus when my `notebook` are generated they look for `custom.css` files in by going one step up and finding the `assets/css/custom.css` file which is not there. There is not assets folder there.
+- This was the reason that in the beginning I had difficulty figureing out why it is not reading the custom.css files. The lesson learned is that if you do not know how exactly a website is designed to work, you should stick to its guide line. A slighteset  dtour can cost you a lot of time. Therefore I had to change the entry in `base_helper.tmpl` file from `../assets/css/` to `../../assets/css`.
+
+- This template uses `rst.css, code.css and theme.csss` if `cdn` is not used and we are not using `cdn`. These files are used by the themes used.
+- The `theme.css` file is the main file that controls the look an feel, it can by copied kept along with other css files by giving a differnt name but it needs to be mentioned in template entries. or replaced at all.
+
+> Note: The other entry in `EXTRA_HEAD_DATA` is for using `Font Awesome`. I have not used them yet but will be doing when needed. Having said the above the template only needed for two prupose first that you can use it to create new files based upon your custom template and for the themese to use them propertly.
+
+So there are three different issues, customizing templates and customising only css file and third one is customising ipyhon notebooks
+
+### commit time
 
 

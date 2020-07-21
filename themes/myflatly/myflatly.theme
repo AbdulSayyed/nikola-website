@@ -10,3 +10,6 @@ tags = bootstrap
 [Family]
 family = bootstrap4
 
+[Nikola]
+bootswatch = true
+
