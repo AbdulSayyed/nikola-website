@@ -84,3 +84,46 @@ lrwxrwxrwx  1 sayyed sayyed   31 Jul 21 16:11 nik-nip-vscode -> ./.vscode/Nikola
 5. They can all be opened from one place and knows which environment they are to be used as in their meta contents this information is saved.
 6. If not the right kernel can be opened from the right corner.
 
+### How this repo is committed
+
+1. Since I am using nikola, whatever I do I keep the work under `mysite` folder so that it is also published as well.
+2. I always work in dev branch. To publish my site , I switched to `src` by using `git checkout src` from here I use `nikola github_deploy`. This takes care of eveything and only deploy the output folder and whatever is necessary to produce a websit.
+3. I also wanted to be able to use my repo with windows so I cloned it to my windwos environment but realised that it does not have any contents, it is only a publish html file repo. No markdown contents.
+4. To resolve this issue I had to create a new repo which I named `https://github.com/AbdulSayyed/nikola-website` and added a remote in my local `dev` branch where I usually work from.
+5. To add a new remote to a same repo I used this command `git remote add niksrc https://github.com/AbdulSayyed/nikola-website.git` as shown below. Now I have my dev branch set to a remote repo name `nikola-website.git`. This branch is added or referenced in my config file as `niksrc`. To pus or pull I would use `git push niksrc dev` or `git pull niksrc dev`
+
+```git
+ ~/n/p/n/mysite on dev  git remote add niksrc https://github.com/AbdulSayyed/nikola-website.git                      (nikola) 12:59:21
+⋊> ~/n/p/n/mysite on dev  git remote -v                                                                                (nikola) 12:59:43
+niksrc	https://github.com/AbdulSayyed/nikola-website.git (fetch)
+niksrc	https://github.com/AbdulSayyed/nikola-website.git (push)
+origin	https://github.com/AbdulSayyed/AbdulSayyed.github.io.git (fetch)
+origin	https://github.com/AbdulSayyed/AbdulSayyed.github.io.git (push)
+⋊> ~/n/p/n/mysite on dev  git status                                                                                   (nikola) 12:59:49
+On branch dev
+nothing to commit, working tree clean
+⋊> ~/n/p/n/mysite on dev  git push -u niksrc dev                                                                       (nikola) 13:00:10
+Username for 'https://github.com': Abdulsayyed
+Password for 'https://Abdulsayyed@github.com': 
+Enumerating objects: 111, done.
+Counting objects: 100% (111/111), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (97/97), done.
+Writing objects: 100% (111/111), 259.39 KiB | 7.63 MiB/s, done.
+Total 111 (delta 41), reused 6 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (41/41), done.
+To https://github.com/AbdulSayyed/nikola-website.git
+ * [new branch]      dev -> dev
+Branch 'dev' set up to track remote branch 'dev' from 'niksrc'.
+⋊> ~/n/p/n/mysite on dev ◦ git remote -v                                                                               (nikola) 13:01:08
+niksrc	https://github.com/AbdulSayyed/nikola-website.git (fetch)
+niksrc	https://github.com/AbdulSayyed/nikola-website.git (push)
+origin	https://github.com/AbdulSayyed/AbdulSayyed.github.io.git (fetch)
+origin	https://github.com/AbdulSayyed/AbdulSayyed.github.io.git (push)
+⋊> ~/n/p/n/mysite on dev ◦    
+```
+
+> The reason it was done because I was having difficulty with shared folder with VBox and Ubuntu 20.04. As there are some material, especially some images that I wanted to use with nikola site.
+
+- Though I have started working from both machine, I need to understand that I can only work or update the contents from one machine, push it to the remote. And then when starting to work again in another machine I need to pull a repo and started woking with it. I can not start to wrok in both machine with the same repo as it would created confilicts and I will loose my work.
+
